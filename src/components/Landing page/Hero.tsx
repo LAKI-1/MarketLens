@@ -33,7 +33,7 @@ export default function Hero() {
       {/* Background city image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/image.png"
+          src="/images/hero-city.jpg"
           alt="City background"
           className="w-full h-full object-cover object-center"
           style={{ filter: 'brightness(1.05) contrast(0.95)' }}
@@ -45,30 +45,30 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center flex-1 pt-28 pb-24 px-4">
+      <div className="relative z-10 flex flex-col items-center flex-1 pt-24 pb-24 px-4">
 
         {/* Eyebrow */}
-        <div
+        {/* <div
           className={`transition-all duration-700 delay-100 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         >
           <span className="inline-flex items-center gap-2 bg-white/90 border border-brand-border text-brand-neutral text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm mb-6 tracking-wide uppercase">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             AI-Powered Growth Operating System
           </span>
-        </div>
+        </div> */}
 
         {/* Headline */}
         <div
           className={`text-center transition-all duration-700 delay-200 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
         >
           <p className="text-brand-neutral text-lg md:text-xl font-medium mb-2 tracking-wide">Discover your next</p>
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-ink leading-none tracking-tight">
+          <h1 className="text-6xl md:text-8xl lg:text-8xl font-black text-ink leading-none tracking-tight">
             GROWTH<br />ENGINE
           </h1>
         </div>
 
         {/* Mobile mockup with floating badges */}
-        <div className="relative w-full max-w-5xl flex items-center justify-center mt-8">
+        <div className="relative w-full max-w-5xl flex items-center justify-center mt-6">
 
           {/* Floating badges */}
           {floatingBadges.map((badge, i) => {
@@ -97,13 +97,12 @@ export default function Hero() {
           >
             <div className="w-64 md:w-72 bg-white rounded-[2.5rem] border-4 border-ink overflow-hidden">
               {/* Phone top bar */}
-              <div className="bg-ink h-10 flex items-center justify-between px-5">
-                <span className="text-white text-xs font-medium">9:41</span>
-                <div className="w-16 h-4 bg-ink-deep rounded-full" />
-                <div className="flex items-center gap-1">
-                  <span className="text-white text-xs">MarketLens</span>
+              <div className="bg-white h-10 relative flex items-center px-5">
+                <div className="absolute left-1/2 -translate-x-1/2 w-20 h-4 bg-ink-deep rounded-full" />
+                  <div className="flex items-center gap-2 ml-auto">
+                    {/* Right content */}
+                  </div>
                 </div>
-              </div>
 
               {/* Phone content */}
               <div className="bg-white p-5">

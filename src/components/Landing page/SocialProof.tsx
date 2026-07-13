@@ -80,19 +80,21 @@ export default function SocialProof() {
         </div>
 
         {/* Problem / Solution split */}
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
           {/* Problem side */}
-          <div className={`transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+          <div
+            className={`rounded-[2rem] border border-red-100 bg-red-50/40 p-8 md:p-10 flex flex-col transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+          >
             <span className="text-xs font-bold tracking-widest uppercase text-red-500 mb-4 block">The Problem</span>
             <h2 className="text-4xl md:text-5xl font-black text-ink leading-tight mb-6">
-              Most businesses fail<br />not the product —<br />
+              Most businesses fail<br />not the product<br />
               <span className="text-brand-neutral/50">the growth.</span>
             </h2>
             <p className="text-brand-neutral text-base leading-relaxed mb-8">
               Millions of small businesses register every year but struggle because they lack
               the expertise in marketing, analytics, branding, and growth strategy.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
               {problems.map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
                   <Icon className="w-4 h-4 text-red-400 shrink-0" />
@@ -103,7 +105,9 @@ export default function SocialProof() {
           </div>
 
           {/* Solution side */}
-          <div className={`transition-all duration-700 delay-400 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+          <div
+            className={`rounded-[2rem] border border-primary-100 bg-primary-50/40 p-8 md:p-10 flex flex-col transition-all duration-700 delay-400 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+          >
             <span className="text-xs font-bold tracking-widest uppercase text-primary mb-4 block">The Solution</span>
             <h2 className="text-4xl md:text-5xl font-black text-ink leading-tight mb-6">
               Your AI<br />growth<br />
@@ -111,9 +115,9 @@ export default function SocialProof() {
             </h2>
             <p className="text-brand-neutral text-base leading-relaxed mb-8">
               Instead of hiring a marketing consultant, SEO expert, analyst, product manager,
-              growth hacker, and market researcher — MarketLens provides all of them in one platform.
+              growth hacker, and market researcher - MarketLens provides all of them in one platform.
             </p>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
               {[
                 { role: 'Marketing Consultant', replaced: true },
                 { role: 'SEO Expert', replaced: true },

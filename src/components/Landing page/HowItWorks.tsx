@@ -42,7 +42,7 @@ export default function HowItWorks() {
             How It Works
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-ink leading-tight">
-            From signup to your first win<br />— same day.
+            From signup to your first win<br /> same day.
           </h2>
         </div>
 

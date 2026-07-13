@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Search, Twitter, Linkedin, Github, ArrowRight } from 'lucide-react';
+import { Twitter, Linkedin, Github, ArrowRight } from 'lucide-react';
 
 const footerLinks = {
   Product: ['Features', 'Pricing', 'Integrations', 'Changelog', 'Roadmap'],
@@ -40,7 +40,7 @@ export default function Footer() {
                 Your AI growth<br />co-founder is here.
               </h2>
               <p className="text-white/60 text-base leading-relaxed">
-                Join thousands of businesses growing smarter with MarketLens. Register in minutes — see your growth roadmap today.
+                Join thousands of businesses growing smarter with MarketLens. Register in minutes see your growth roadmap today.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
@@ -66,13 +66,12 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
           {/* Logo column */}
           <div className="col-span-2">
-            <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Search className="w-4 h-4 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="font-bold text-lg text-ink">
-                Market<span className="text-primary">Lens</span>
-              </span>
+            <a href="#" className="flex items-center mb-4">
+              <img
+                src="/images/MarketLens.png"
+                alt="MarketLens logo"
+                className="h-10 w-auto object-contain"
+              />
             </a>
             <p className="text-sm text-brand-neutral leading-relaxed max-w-xs">
               The AI-powered growth operating system for businesses of every size.
@@ -110,7 +109,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-brand-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-brand-neutral">
-            © 2026 MarketLens Inc. All rights reserved.
+            © 2026 Lifinity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="text-xs text-brand-neutral">Built for 400M+ businesses worldwide</span>

@@ -49,7 +49,7 @@ const features = [
     icon: LineChart,
     tag: '6.6',
     title: 'Product Growth Analytics',
-    description: 'Track CAC, LTV, conversion rate, churn rate, and retention rate — all in one unified dashboard.',
+    description: 'Track CAC, LTV, conversion rate, churn rate, and retention rate all in one unified dashboard.',
     highlight: 'CAC · LTV · Churn',
     color: 'tertiary',
   },
@@ -73,18 +73,18 @@ const features = [
     icon: MessageSquare,
     tag: '6.9',
     title: 'AI Business Advisor',
-    description: 'Ask anything: "Why are sales dropping?", "Which market should I enter?", "Which product to discontinue?" — get data-backed answers.',
+    description: 'Ask anything: "Why are sales dropping?", "Which market should I enter?", "Which product to discontinue?" get data-backed answers.',
     highlight: 'Chat interface',
     color: 'tertiary',
   },
-  {
-    icon: TrendingUp,
-    tag: '6.10',
-    title: 'Investor Readiness Score',
-    description: 'Measure growth, revenue, product-market fit, and retention. Get a fundraising readiness report for your next round.',
-    highlight: 'PMF · Revenue · Growth',
-    color: 'primary',
-  },
+  // {
+  //   icon: TrendingUp,
+  //   tag: '6.10',
+  //   title: 'Investor Readiness Score',
+  //   description: 'Measure growth, revenue, product-market fit, and retention. Get a fundraising readiness report for your next round.',
+  //   highlight: 'PMF · Revenue · Growth',
+  //   color: 'primary',
+  // },
 ];
 
 const colorMap: Record<string, { iconBg: string; iconColor: string; tagColor: string; highlightBg: string; highlightText: string }> = {
