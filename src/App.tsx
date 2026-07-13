@@ -1,26 +1,31 @@
-import Navbar from './components/Landing page/Navbar';
-import Hero from './components/Landing page/Hero';
-import SocialProof from './components/Landing page/SocialProof';
-import HowItWorks from './components/Landing page/HowItWorks';
-import Features from './components/Landing page/Features';
-import ComparisonSection from './components/Landing page/ComparisonSection';
-import Pricing from './components/Landing page/Pricing';
-import Footer from './components/Landing page/Footer';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SignInPage from './pages/SignInPage';
+import RegistrationFlow from './components/registration/RegistrationFlow';
+import { RegistrationProvider } from './components/registration/RegistrationContext';
+
+function RegisterWithProvider() {
+  const location = useLocation();
+  const state = location.state as { email?: string; ownerId?: string } | null;
+  const initialEmail = state?.email || '';
+  const initialOwnerId = state?.ownerId || '';
+
+  return (
+    <RegistrationProvider initialEmail={initialEmail} initialOwnerId={initialOwnerId}>
+      <RegistrationFlow />
+    </RegistrationProvider>
+  );
+}
 
 function App() {
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
-      <Navbar />
-      <main>
-        <Hero />
-        <SocialProof />
-        <HowItWorks />
-        <Features />
-        <ComparisonSection />
-        <Pricing />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/register" element={<RegisterWithProvider />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

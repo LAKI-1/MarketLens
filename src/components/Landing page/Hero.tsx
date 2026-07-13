@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { TrendingUp, Users, Activity, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const floatingBadges = [
   { icon: TrendingUp, label: '+18% MRR', color: 'bg-secondary', textColor: 'text-white', position: 'top-[28%] left-[8%]', delay: '0s' },
@@ -19,6 +20,7 @@ export default function Hero() {
   const [emailValue, setEmailValue] = useState('');
   const [barWidths, setBarWidths] = useState([0, 0, 0]);
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -161,7 +163,10 @@ export default function Hero() {
               onChange={(e) => setEmailValue(e.target.value)}
               className="w-72 sm:w-64 bg-white/90 backdrop-blur-sm border border-brand-border rounded-full px-5 py-3 text-sm text-ink placeholder-brand-neutral/60 outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm transition-all"
             />
-            <button className="bg-ink text-white text-sm font-bold px-7 py-3 rounded-full hover:bg-primary transition-all duration-200 shadow-lg hover:shadow-primary/30 flex items-center gap-2 whitespace-nowrap">
+            <button
+              onClick={() => navigate('/register', { state: { email: emailValue } })}
+              className="bg-ink text-white text-sm font-bold px-7 py-3 rounded-full hover:bg-primary transition-all duration-200 shadow-lg hover:shadow-primary/30 flex items-center gap-2 whitespace-nowrap"
+            >
               Start free <span>→</span>
             </button>
           </div>

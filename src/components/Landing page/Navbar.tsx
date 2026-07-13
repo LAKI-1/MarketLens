@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -44,15 +45,15 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="hidden md:flex items-center gap-3">
-          <a href="#" className="text-sm text-brand-neutral hover:text-ink font-medium transition-colors duration-150 px-4 py-2 rounded-full hover:bg-brand-muted">
+          <Link to="/signin" className="text-sm text-brand-neutral hover:text-ink font-medium transition-colors duration-150 px-4 py-2 rounded-full hover:bg-brand-muted">
             Sign in
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/register"
             className="text-sm font-semibold bg-primary text-white px-5 py-2.5 rounded-full hover:bg-primary-700 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
           >
             Get started <span className="text-xs">→</span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -78,10 +79,10 @@ export default function Navbar() {
             </a>
           ))}
           <div className="pt-3 border-t border-brand-border flex flex-col gap-2">
-            <a href="#" className="text-sm text-brand-neutral font-medium py-2">Sign in</a>
-            <a href="#" className="text-sm font-semibold bg-primary text-white px-5 py-2.5 rounded-full text-center">
+            <Link to="/signin" onClick={() => setMenuOpen(false)} className="text-sm text-brand-neutral font-medium py-2">Sign in</Link>
+            <Link to="/register" onClick={() => setMenuOpen(false)} className="text-sm font-semibold bg-primary text-white px-5 py-2.5 rounded-full text-center">
               Get started →
-            </a>
+            </Link>
           </div>
         </div>
       )}

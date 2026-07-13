@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Building2, Globe, Eye, Lightbulb, PenTool, LineChart,
-  Users, BarChart2, MessageSquare, TrendingUp
+  Users, BarChart2, MessageSquare
 } from 'lucide-react';
 
 const features = [
