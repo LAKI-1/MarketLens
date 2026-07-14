@@ -4,7 +4,11 @@ import FormField, { Input } from '../ui/FormField';
 import SocialAuthButton from '../ui/SocialAuthButton';
 import { useRegistration } from '../RegistrationContext';
 
-export default function Step1AccountCreation() {
+interface Step1AccountCreationProps {
+  onGoogleCredential?: (credential: string) => void;
+}
+
+export default function Step1AccountCreation({ onGoogleCredential }: Step1AccountCreationProps) {
   const { data, updatePersonalInfo } = useRegistration();
   const { personalInfo } = data;
   const [showPassword, setShowPassword] = useState(false);
@@ -20,9 +24,7 @@ export default function Step1AccountCreation() {
 
       {/* Social Auth */}
       <div className="space-y-3">
-        <SocialAuthButton provider="google" />
-        <SocialAuthButton provider="microsoft" />
-        <SocialAuthButton provider="linkedin" />
+        <SocialAuthButton provider="google" onGoogleCredential={onGoogleCredential} />
       </div>
 
       {/* Divider */}

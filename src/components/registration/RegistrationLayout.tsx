@@ -50,7 +50,7 @@ export default function RegistrationLayout({
       case 2:
         return {
           title: 'Why this matters?',
-          imageSrc: 'https://images.unsplash.com/photo-1542744173-8e08562744ad?w=600&auto=format&fit=crop&q=80',
+          imageSrc: 'https://www.stellarcontent.com/wp-content/uploads/content-calibration-phase-featured-image-min.jpg',
           imageLabel: 'Calibration Phase',
           imageSubLabel: 'Setting your strategic foundation.',
           items: [

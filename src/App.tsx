@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
 import RegistrationFlow from './components/registration/RegistrationFlow';
 import { RegistrationProvider } from './components/registration/RegistrationContext';
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterWithProvider />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
       </Routes>
     </BrowserRouter>
   );

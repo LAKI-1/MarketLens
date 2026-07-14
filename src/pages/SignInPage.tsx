@@ -32,7 +32,10 @@ export default function SignInPage() {
       });
 
       if (authError) {
-        setError(authError.message);
+        const message = authError.message.includes('rate limit')
+          ? 'Too many sign-in attempts. Please wait a few minutes and try again.'
+          : authError.message;
+        setError(message);
         return;
       }
 
@@ -64,8 +67,43 @@ export default function SignInPage() {
     }
   };
 
-  const handleSocialClick = () => {
-    navigate('/register');
+  const handleGoogleCredential = async (credential: string) => {
+    setError(null);
+    setLoading(true);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.signInWithIdToken({
+        provider: 'google',
+        token: credential,
+      });
+
+      if (authError) {
+        setError(authError.message);
+        return;
+      }
+
+      if (authData?.user) {
+        const { data: busData, error: busError } = await supabase
+          .from('businesses')
+          .select('id')
+          .eq('owner_id', authData.user.id);
+
+        if (busError) {
+          setError(busError.message);
+          return;
+        }
+
+        if (busData && busData.length > 0) {
+          navigate('/');
+        } else {
+          navigate('/register', { state: { email: authData.user.email, ownerId: authData.user.id } });
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || 'Google sign-in failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,8 +139,7 @@ export default function SignInPage() {
 
           {/* Social Auth */}
           <div className="space-y-3 mb-6">
-            <SocialAuthButton provider="google" onClick={handleSocialClick} />
-            <SocialAuthButton provider="microsoft" onClick={handleSocialClick} />
+            <SocialAuthButton provider="google" onGoogleCredential={handleGoogleCredential} />
           </div>
 
           {/* Divider */}

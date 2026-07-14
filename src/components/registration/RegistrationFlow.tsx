@@ -24,6 +24,34 @@ export default function RegistrationFlow() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const handleGoogleCredential = async (credential: string) => {
+    setError(null);
+    setLoading(true);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.signInWithIdToken({
+        provider: 'google',
+        token: credential,
+      });
+
+      if (authError) {
+        setError(authError.message);
+        return;
+      }
+
+      if (authData?.user) {
+        setOwnerId(authData.user.id);
+        // Skip step 1 since Google already created the account — go to step 2
+        setCurrentStep(2);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } catch (err: any) {
+      setError(err.message || 'Google sign-up failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const validateStep = (step: number): boolean => {
     setError(null);
     switch (step) {
@@ -123,7 +151,10 @@ export default function RegistrationFlow() {
             });
 
             if (authError) {
-              setError(authError.message);
+              const message = authError.message.includes('rate limit')
+                ? 'Too many sign-up requests. Please wait a few minutes and try again.'
+                : authError.message;
+              setError(message);
               window.scrollTo({ top: 0, behavior: 'smooth' });
               return;
             }
@@ -295,7 +326,7 @@ export default function RegistrationFlow() {
 
   const renderStepComponent = () => {
     switch (currentStep) {
-      case 1: return <Step1AccountCreation />;
+      case 1: return <Step1AccountCreation onGoogleCredential={handleGoogleCredential} />;
       case 2: return <Step2BusinessBasics />;
       case 3: return <Step3BusinessStage />;
       case 4: return <Step4CompanyProfile />;
@@ -322,7 +353,7 @@ export default function RegistrationFlow() {
         <div className="absolute inset-0 bg-white/70 backdrop-blur-xs flex items-center justify-center z-50 rounded-3xl">
           <div className="flex flex-col items-center gap-3">
             <Loader2 className="w-10 h-10 text-primary animate-spin" />
-            <span className="text-sm font-semibold text-ink">Syncing with Supabase...</span>
+            <span className="text-sm font-semibold text-ink">Syncing...</span>
           </div>
         </div>
       )}
