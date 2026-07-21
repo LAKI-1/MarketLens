@@ -5,7 +5,7 @@ import SocialAuthButton from '../ui/SocialAuthButton';
 import { useRegistration } from '../RegistrationContext';
 
 interface Step1AccountCreationProps {
-  onGoogleCredential?: (credential: string) => void;
+  onGoogleCredential?: (credential: string, rawNonce?: string) => void;
 }
 
 export default function Step1AccountCreation({ onGoogleCredential }: Step1AccountCreationProps) {

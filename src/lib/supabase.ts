@@ -15,3 +15,20 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
+/**
+ * Generates a raw nonce and its SHA-256 hashed counterpart for Google ID Token auth.
+ * Google GIS expects the hashed nonce, while Supabase GoTrue expects the raw nonce
+ * so it can hash it server-side and verify the match.
+ */
+export async function generateNonce(): Promise<{ rawNonce: string; hashedNonce: string }> {
+  const rawNonce = crypto.randomUUID();
+  const encoder = new TextEncoder();
+  const data = encoder.encode(rawNonce);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashedNonce = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  return { rawNonce, hashedNonce };
+}
+
+
+

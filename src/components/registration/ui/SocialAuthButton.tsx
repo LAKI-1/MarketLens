@@ -1,33 +1,61 @@
-import { useGoogleLogin } from '@react-oauth/google';
+import { useCallback } from 'react';
+import { generateNonce } from '../../../lib/supabase';
 
 interface SocialAuthButtonProps {
   provider: 'google' | 'microsoft' | 'linkedin';
-  /** Called with the Google ID token credential */
-  onGoogleCredential?: (credential: string) => void;
+  /** Called with the Google ID token credential and raw nonce */
+  onGoogleCredential?: (credential: string, rawNonce?: string) => void;
   /** Generic click handler (non-google providers) */
   onClick?: () => void;
 }
 
-function GoogleButton({ onGoogleCredential }: { onGoogleCredential?: (c: string) => void }) {
-  const login = useGoogleLogin({
-    flow: 'implicit',
-    scope: 'openid email profile',
-    onSuccess: (tokenResponse) => {
-      // When openid scope is included, id_token is returned alongside access_token
-      const idToken = (tokenResponse as any).id_token as string | undefined;
-      if (idToken) {
-        onGoogleCredential?.(idToken);
-      } else {
-        console.error('Google sign-in: id_token not present in response');
+function GoogleButton({ onGoogleCredential }: { onGoogleCredential?: (c: string, nonce?: string) => void }) {
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  const handleClick = useCallback(async () => {
+    const google = (window as any).google;
+    if (!google?.accounts?.id) {
+      console.error('Google Identity Services SDK not loaded');
+      return;
+    }
+
+    let rawNonce: string | undefined;
+    let hashedNonce: string | undefined;
+
+    try {
+      const nonceObj = await generateNonce();
+      rawNonce = nonceObj.rawNonce;
+      hashedNonce = nonceObj.hashedNonce;
+    } catch (e) {
+      console.warn('Failed to generate nonce for Google Auth:', e);
+    }
+
+    google.accounts.id.initialize({
+      client_id: clientId,
+      ...(hashedNonce ? { nonce: hashedNonce } : {}),
+      callback: (response: { credential: string }) => {
+        // response.credential is the JWT id_token
+        onGoogleCredential?.(response.credential, rawNonce);
+      },
+    });
+
+    // Programmatically trigger the One Tap / popup sign-in
+    google.accounts.id.prompt((notification: { getMomentType: () => string }) => {
+      if (notification.getMomentType() === 'skipped' || notification.getMomentType() === 'dismissed') {
+        // Fallback: open the full sign-in popup
+        google.accounts.id.renderButton(
+          document.createElement('div'),
+          { type: 'standard' }
+        );
+        console.info('One Tap skipped/dismissed, user may need to click the popup.');
       }
-    },
-    onError: () => console.error('Google sign-in failed'),
-  });
+    });
+  }, [clientId, onGoogleCredential]);
 
   return (
     <button
       type="button"
-      onClick={() => login()}
+      onClick={handleClick}
       className="w-full flex items-center justify-center gap-3 bg-white border border-brand-border rounded-xl px-4 py-3 text-sm font-medium text-ink hover:bg-surface hover:border-brand-neutral/30 transition-all duration-200 hover:shadow-sm active:scale-[0.99]"
     >
       {/* Official Google "G" colour logo */}

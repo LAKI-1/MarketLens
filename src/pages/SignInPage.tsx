@@ -67,7 +67,7 @@ export default function SignInPage() {
     }
   };
 
-  const handleGoogleCredential = async (credential: string) => {
+  const handleGoogleCredential = async (credential: string, rawNonce?: string) => {
     setError(null);
     setLoading(true);
 
@@ -75,6 +75,7 @@ export default function SignInPage() {
       const { data: authData, error: authError } = await supabase.auth.signInWithIdToken({
         provider: 'google',
         token: credential,
+        ...(rawNonce ? { nonce: rawNonce } : {}),
       });
 
       if (authError) {

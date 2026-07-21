@@ -24,7 +24,7 @@ export default function RegistrationFlow() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleGoogleCredential = async (credential: string) => {
+  const handleGoogleCredential = async (credential: string, rawNonce?: string) => {
     setError(null);
     setLoading(true);
 
@@ -32,6 +32,7 @@ export default function RegistrationFlow() {
       const { data: authData, error: authError } = await supabase.auth.signInWithIdToken({
         provider: 'google',
         token: credential,
+        ...(rawNonce ? { nonce: rawNonce } : {}),
       });
 
       if (authError) {
