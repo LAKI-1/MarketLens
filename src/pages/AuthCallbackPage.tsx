@@ -28,7 +28,7 @@ export default function AuthCallbackPage() {
           }
 
           if (busData && busData.length > 0) {
-            navigate('/', { replace: true });
+            navigate('/dashboard', { replace: true });
           } else {
             navigate('/register', {
               replace: true,

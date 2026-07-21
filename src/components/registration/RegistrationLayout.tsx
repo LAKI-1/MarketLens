@@ -265,7 +265,7 @@ export default function RegistrationLayout({
         <ProgressRail currentStep={currentStep} totalSteps={totalSteps} />
 
         {/* Central Card Form Panel */}
-        <div className="flex-1 max-w-3xl bg-white border border-brand-border rounded-3xl p-6 md:p-10 shadow-xl shadow-slate-200/50 flex flex-col min-h-[550px] relative overflow-hidden">
+        <div className="flex-1 max-w-3xl bg-white border border-brand-border rounded-3xl p-6 md:p-10 shadow-xl shadow-slate-200/50 flex flex-col min-h-[550px] relative">
           {/* Form Children Content */}
           <div className="flex-1 mb-8 animate-stepIn">
             {children}

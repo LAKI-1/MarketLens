@@ -4,6 +4,8 @@ import SignInPage from './pages/SignInPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import RegistrationFlow from './components/registration/RegistrationFlow';
 import { RegistrationProvider } from './components/registration/RegistrationContext';
+import { AuthProvider } from './context/AuthContext';
+import Dashboard from './pages/Dashboard';
 
 function RegisterWithProvider() {
   const location = useLocation();
@@ -20,14 +22,17 @@ function RegisterWithProvider() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/register" element={<RegisterWithProvider />} />
-        <Route path="/auth/callback" element={<AuthCallbackPage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/register" element={<RegisterWithProvider />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

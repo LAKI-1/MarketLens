@@ -4,18 +4,26 @@ import SelectDropdown from '../ui/SelectDropdown';
 import { Plus, Trash2, Box } from 'lucide-react';
 
 const pricingModels = [
-  { label: 'Subscription', value: 'Subscription' },
+  { label: 'Subscription / Recurring', value: 'Subscription' },
   { label: 'One-time Purchase', value: 'One-time Purchase' },
   { label: 'Freemium', value: 'Freemium' },
-  { label: 'Usage Based', value: 'Usage Based' },
+  { label: 'Usage / Pay-as-you-go', value: 'Usage Based' },
+  { label: 'Tiered Pricing', value: 'Tiered Pricing' },
+  { label: 'Per User / Per Seat', value: 'Per User' },
+  { label: 'Commission / Transaction Fee', value: 'Commission' },
   { label: 'Marketplace', value: 'Marketplace' },
   { label: 'Advertisement Supported', value: 'Advertisement Supported' },
+  { label: 'Free', value: 'Free' },
+  { label: 'Custom / Enterprise', value: 'Custom' },
 ];
 
 const frequencies = [
   { label: 'Monthly', value: 'Monthly' },
-  { label: 'Annual', value: 'Annual' },
+  { label: 'Annual / Yearly', value: 'Annual' },
+  { label: 'Quarterly', value: 'Quarterly' },
   { label: 'One-time', value: 'One-time' },
+  { label: 'Weekly', value: 'Weekly' },
+  { label: 'Pay-as-you-go', value: 'Pay-as-you-go' },
   { label: 'Custom', value: 'Custom' },
 ];
 
@@ -27,6 +35,23 @@ export default function Step5Products() {
     if (val === '' || /^[0-9]+(\.[0-9]{0,2})?$/.test(val)) {
       updateProduct(id, { price: val });
     }
+  };
+
+  const handlePricingModelChange = (id: string, modelVal: string) => {
+    const targetProduct = products.find(p => p.id === id);
+    const updates: Partial<typeof products[0]> = { pricingModel: modelVal };
+
+    // Auto-suggest matching frequency if not set
+    if (targetProduct && !targetProduct.frequency) {
+      if (modelVal === 'One-time Purchase' || modelVal === 'Free') {
+        updates.frequency = 'One-time';
+      } else if (modelVal === 'Subscription' || modelVal === 'Tiered Pricing' || modelVal === 'Per User') {
+        updates.frequency = 'Monthly';
+      } else if (modelVal === 'Usage Based') {
+        updates.frequency = 'Pay-as-you-go';
+      }
+    }
+    updateProduct(id, updates);
   };
 
   return (
@@ -54,6 +79,7 @@ export default function Step5Products() {
         {products.map((product, idx) => (
           <div
             key={product.id}
+            style={{ zIndex: products.length - idx }}
             className="border border-brand-border rounded-2xl bg-white p-5 md:p-6 shadow-sm relative hover:border-brand-neutral/20 transition-all duration-200"
           >
             {/* Index badge & Remove button */}
@@ -106,9 +132,10 @@ export default function Step5Products() {
                 <FormField label="Pricing Model">
                   <SelectDropdown
                     value={product.pricingModel}
-                    onChange={v => updateProduct(product.id, { pricingModel: v })}
+                    onChange={v => handlePricingModelChange(product.id, v)}
                     options={pricingModels}
                     placeholder="Select model..."
+                    searchable
                   />
                 </FormField>
 

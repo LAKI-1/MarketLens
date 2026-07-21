@@ -177,10 +177,18 @@ export default function RegistrationFlow() {
     if (currentStep === totalSteps) {
       setLoading(true);
       try {
-        let userId = data.ownerId;
-        if (!userId) {
-          const { data: userData } = await supabase.auth.getUser();
-          userId = userData?.user?.id;
+        let { data: userData } = await supabase.auth.getUser();
+        let userId = userData?.user?.id || data.ownerId;
+
+        // Fallback: If user session is inactive, attempt auto sign-in with email & password from Step 1
+        if (!userData?.user && data.personalInfo.email && data.personalInfo.password) {
+          const { data: signInData } = await supabase.auth.signInWithPassword({
+            email: data.personalInfo.email,
+            password: data.personalInfo.password,
+          });
+          if (signInData?.user) {
+            userId = signInData.user.id;
+          }
         }
 
         if (!userId) {
@@ -303,8 +311,7 @@ export default function RegistrationFlow() {
           }
         }
 
-        alert('Congratulations! Your onboarding is complete and saved to Supabase.');
-        navigate('/');
+        navigate('/dashboard');
       } catch (err: any) {
         setError(err.message || 'An error occurred while saving onboarding metrics.');
       } finally {

@@ -52,11 +52,9 @@ export default function SignInPage() {
         }
 
         if (busData && busData.length > 0) {
-          alert('Sign in successful! Loading your Growth Dashboard...');
-          navigate('/');
+          navigate('/dashboard');
         } else {
           // If no business profile registered yet, direct them to complete the onboarding
-          alert('Sign in successful! Let\'s complete your business calibration profile.');
           navigate('/register', { state: { email, ownerId: authData.user.id } });
         }
       }
@@ -95,7 +93,7 @@ export default function SignInPage() {
         }
 
         if (busData && busData.length > 0) {
-          navigate('/');
+          navigate('/dashboard');
         } else {
           navigate('/register', { state: { email: authData.user.email, ownerId: authData.user.id } });
         }
