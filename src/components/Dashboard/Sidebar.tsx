@@ -20,12 +20,12 @@ export default function Sidebar() {
     return (
         <aside className="w-56 bg-white border-r border-brand-border flex flex-col h-screen sticky top-0 shrink-0">
             {/* Logo */}
-            <div className="px-4 pt-5 pb-3">
-                <NavLink to="/dashboard">
+            <div className="flex items-center px-4 py-4">
+                <NavLink to="/dashboard" className="block w-full">
                     <img
                         src="/images/MarketLens.png"
                         alt="MarketLens"
-                        className="h-10 w-26 w-auto object-contain"
+                        className="h-10 w-auto object-contain"
                     />
                 </NavLink>
             </div>
